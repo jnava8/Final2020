@@ -48,19 +48,124 @@ rowPerc(table1)
 colPerc(table1)
 ```
 
-# Guys Sex= "Guy"
 
 
+# Guys 
 
-### Plot barplots
+###  Barplots
 
 #### Plot barplots tigerstats way
 
 ```{r}
-barchartGC(~infected + treatment,data=FinalData)
-barchartGC(~infected + treatment,data=FinalData, type="percent")
+barchartGC(~infected + treatment,data=guy)
+barchartGC(~infected + treatment,data=guy, type="percent")
 
 ```
+
+#### Plot barplots ggplot way
+
+```{r}
+dd2 <- guy %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+This graphs tells us that almost 20% more of guys that took the covid 19 vaccine contracted the virus versus the guys that took the placebo. 
+
+
+### Numerical Summaries  
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=guy)
+rowPerc(table1)
+colPerc(table1)
+```
+These numerical results show us that 58% of guys who took the covid 19 vaccine contracted the virus. 42% of the guys that took the placebo contracted covid-19.
+
+## Inferential  
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+
+These inferential results show us that the p-value is .0005801, this makes me reject the null hypothesis. 
+
+# Gals
+
+###  Barplots
+
+#### Plot barplots tigerstats way
+
+```{r}
+barchartGC(~infected + treatment,data=gal)
+barchartGC(~infected + treatment,data=gal, type="percent")
+
+```
+
+
+#### Plot barplots ggplot way
+
+```{r}
+dd2 <- gal %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+  
+This graph demonstrates how 25% more gals that took the placebo got infected with covid 19. 
+  
+### Numerical Summaries  
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=gal)
+rowPerc(table1)
+colPerc(table1)
+```
+
+These numerical results show percentages of gals that got the covid-19 vaccine and the placebo. These numerical results show us that gals who have taken the vaccine 33% have gotten covid-19 and 67% of these gals who took the placebo have gotten covid-19.
+
+
+## Inferential  
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+
+These inferential results show us that the p-value is 2.2e-16, this makes me reject the null hypothesis. 
+
+# Sexual Orientation
+
+###  Barplots
+
+#### Plot barplots tigerstats way
+
+```{r}
+barchartGC(~infected + treatment,data=gay)
+barchartGC(~infected + treatment,data=gay, type="percent")
+
+```
+
 
 #### Plot barplots ggplot way
 
@@ -75,14 +180,66 @@ basicC + geom_bar(stat="identity",position="dodge")
 
 #Now for percentage plot
 
-basicCC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment)) 
+basicCC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+  
+This graph demonstrates how gay individuals with who took the covid 19 vaccine and the placebo will still contract covid 19.This graph also shows us that gay individuals who took the covid-19 vaccine have contracted covid by 40% more than if they took the placebo. 
+
+
+### Numerical Summaries  
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=gay)
+rowPerc(table1)
+colPerc(table1)
+```
+
+These are numerical results of gay individuals who took the covid 19 vaccine and a placebo. The percentage of individuals that contracted covid 19 after getting the vaccine was 71% and from the gay individuals that got covid 19 and took the placebo was 29%.
+
+## Inferential  
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+
+The p-value is 5.741e-06, the p-value is small so I will reject the null hypothesis. If a gay individual takes the covid-19 vaccine does not mean that they will not contract Covid. 
+
+# Drug Users 
+
+###  Barplots
+
+#### Plot barplots tigerstats way
+
+```{r}
+barchartGC(~infected + treatment,data=Druguser)
+barchartGC(~infected + treatment,data=Druguser, type="percent")
+
+```
+
+#### Plot barplots ggplot way
+
+```{r}
+dd2 <- Druguser %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment)) 
 basicCC + geom_bar(stat="identity", position = "dodge")
 ```
   
 ### Numerical Summaries  
 
 ```{r}
-table1 <- xtabs(~infected + treatment, data=FinalData)
+table1 <- xtabs(~infected + treatment, data=Druguser)
 rowPerc(table1)
 colPerc(table1)
 ```
@@ -94,18 +251,4 @@ chisqtestGC(table1)
 fisher.test(table1)
 ```
 
-
-
-# Gals Sex = "Gals"
-
-
-
-# Sexual Orientation (LGBTQ = Gay)
-
-
-
-
-# Drug Users "Drug Users = Yes"
-
-
-
+These inferential results tell us that the p-value is 0.002273, this makes me reject the null hypothesis. 
